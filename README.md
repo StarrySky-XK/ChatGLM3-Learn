@@ -10,7 +10,22 @@
 📍在 <a href="https://www.chatglm.cn">chatglm.cn</a> 体验更大规模的 ChatGLM 模型。
 </p>
 
-[Read this in English.](./README_en.md)
+## 环境要求
+protobuf  
+transformers==4.30.2  
+cpm_kernels  
+torch>=2.0  
+gradio==3.39  
+mdtex2html  
+sentencepiece  
+accelerate  
+sse-starlette  
+streamlit>=1.24.0  
+fastapi==0.95.1  
+typing_extensions==4.4.0  
+uvicorn  
+sse_starlette  
+loguru
 
 ## 介绍
 

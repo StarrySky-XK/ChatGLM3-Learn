@@ -11,7 +11,6 @@
 ```bash
 conda create -n chatglm3-demo python=3.10
 conda activate chatglm3-demo
-pip install -r requirements.txt
 ```
 
 请注意，本项目需要 Python 3.10 或更高版本。
