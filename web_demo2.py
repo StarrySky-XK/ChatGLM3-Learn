@@ -8,14 +8,14 @@ st.set_page_config(
     page_icon=":robot:",
     layout="wide"
 )
-
 # 设置为模型ID或本地文件夹路径
-model_path = "THUDM/chatglm3-6b"
+model_path = "../chatglm3-6b"
 
 @st.cache_resource
 def get_model():
     tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
-    model = AutoModel.from_pretrained(model_path, trust_remote_code=True).cuda()
+    # model = AutoModel.from_pretrained(model_path, trust_remote_code=True).cuda()
+    model = AutoModel.from_pretrained(model_path, trust_remote_code=True).quantize(4).cuda()
     # 多显卡支持,使用下面两行代替上面一行,将num_gpus改为你实际的显卡数量
     # from utils import load_model_on_gpus
     # model = load_model_on_gpus("THUDM/chatglm3-6b", num_gpus=2)
@@ -24,6 +24,8 @@ def get_model():
 
 # 加载Chatglm3的model和tokenizer
 tokenizer, model = get_model()
+
+
 
 # 初始化历史记录和past key values
 if "history" not in st.session_state:
@@ -45,7 +47,7 @@ if buttonClean:
         torch.cuda.empty_cache()
     st.rerun()
 
-# 渲染聊天历史记录
+# todo 渲染聊天历史记录 这个聊天历史记录是当前对话还是以往全部的对话？
 for i, message in enumerate(st.session_state.history):
     if message["role"] == "user":
         with st.chat_message(name="user", avatar="user"):
@@ -63,9 +65,13 @@ with st.chat_message(name="assistant", avatar="assistant"):
 # 获取用户输入
 prompt_text = st.chat_input("请输入您的问题")
 
+
+
+
+
+
 # 如果用户输入了内容,则生成回复
 if prompt_text:
-
     input_placeholder.markdown(prompt_text)
     history = st.session_state.history
     past_key_values = st.session_state.past_key_values
